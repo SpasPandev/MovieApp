@@ -1,4 +1,4 @@
-package com.example.movieapp;
+package com.spaspandev.movieapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
