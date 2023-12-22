@@ -1,11 +1,12 @@
 package com.spaspandev.movieapp.model.entity;
 
+import com.enumeration.Role;
 import jakarta.persistence.*;
 
 import java.util.Set;
 
 @Entity
-public class User extends BaseEntity{
+public class User extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -13,6 +14,8 @@ public class User extends BaseEntity{
     private String password;
     @Column(nullable = false, unique = true)
     private String email;
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.ROLE_USER;
     @ManyToMany
     @JoinTable(name = "watchlist", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private Set<Movie> watchlist;
@@ -33,6 +36,10 @@ public class User extends BaseEntity{
 
     public String getEmail() {
         return email;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     public Set<Movie> getWatchlist() {
