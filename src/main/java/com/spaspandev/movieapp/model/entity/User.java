@@ -1,6 +1,6 @@
 package com.spaspandev.movieapp.model.entity;
 
-import com.enumeration.Role;
+import com.spaspandev.movieapp.enumeration.Role;
 import jakarta.persistence.*;
 
 import java.util.Set;

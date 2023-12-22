@@ -1,4 +1,4 @@
-package com.enumeration;
+package com.spaspandev.movieapp.enumeration;
 
 public enum Role {
 
