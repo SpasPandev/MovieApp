@@ -20,11 +20,23 @@ public class Movie extends BaseEntity{
         return movie_external_id;
     }
 
+    public void setMovie_external_id(Long movie_external_id) {
+        this.movie_external_id = movie_external_id;
+    }
+
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
