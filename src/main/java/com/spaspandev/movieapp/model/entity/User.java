@@ -15,7 +15,7 @@ public class User extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String email;
     @Enumerated(EnumType.STRING)
-    private Role role = Role.ROLE_USER;
+    private Role role = Role.USER;
     @ManyToMany
     @JoinTable(name = "watchlist", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private Set<Movie> watchlist;
