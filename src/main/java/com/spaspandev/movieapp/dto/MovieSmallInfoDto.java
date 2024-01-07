@@ -1,13 +1,13 @@
 package com.spaspandev.movieapp.dto;
 
-public class MovieDto {
+public class MovieSmallInfoDto {
 
     private int id;
     private String original_title;
     private String original_name;
     private String overview;
 
-    public MovieDto() {
+    public MovieSmallInfoDto() {
     }
 
     public int getId() {
