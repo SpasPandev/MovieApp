@@ -29,7 +29,25 @@ public class MovieService {
 
     public DayTrendingMoviesDto getDayTrendingMovies() {
 
-        return restTemplate.getForObject(Url.ALL_DAY_TRENDING_MOVIES_URL + "?api_key=" + api, DayTrendingMoviesDto.class);
+        DayTrendingMoviesDto dayTrendingMoviesDto = restTemplate.getForObject(Url.DAY_TRENDING_MOVIES_URL +
+                "?api_key=" + api, DayTrendingMoviesDto.class);
+
+        dayTrendingMoviesDto.getResults().forEach(this::checkIfMovieExistInDbAndSaveIt);
+
+        return dayTrendingMoviesDto;
+    }
+
+    private void checkIfMovieExistInDbAndSaveIt(MovieSmallInfoDto movieSmallInfoDto) {
+
+        if(movieRepository.findByMovieExternalId(movieSmallInfoDto.getId()).isEmpty()){
+
+            MovieFullInfoDto movieFullInfoDto = restTemplate.getForObject(Url.MOVIE_URL + movieSmallInfoDto.getId() +
+                    "?api_key=" + api, MovieFullInfoDto.class);
+
+            Movie movie = modelMapper.map(movieFullInfoDto, Movie.class);
+
+            movieRepository.save(movie);
+        }
     }
 
     public ResponseEntity<?> deleteMovie(Long id) {

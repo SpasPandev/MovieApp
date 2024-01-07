@@ -1,5 +1,7 @@
 package com.spaspandev.movieapp.config;
 
+import com.spaspandev.movieapp.dto.MovieFullInfoDto;
+import com.spaspandev.movieapp.model.entity.Movie;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +13,20 @@ public class BeanConfiguration {
     @Bean
     public ModelMapper modelMapper() {
 
-        return new ModelMapper();
+        ModelMapper modelMapper = new ModelMapper();
+
+        modelMapper
+                .typeMap(MovieFullInfoDto.class, Movie.class)
+                .addMappings(mapper ->
+                        mapper.skip(Movie::setId))
+                .addMappings(mapper ->
+                        mapper.map(MovieFullInfoDto::getId, Movie::setMovie_external_id))
+                .addMappings(mapper ->
+                        mapper.map(MovieFullInfoDto::getTitle, Movie::setName))
+                .addMappings(mapper ->
+                        mapper.map(MovieFullInfoDto::getOverview, Movie::setDescription))
+        ;
+        return modelMapper;
     }
 
     @Bean

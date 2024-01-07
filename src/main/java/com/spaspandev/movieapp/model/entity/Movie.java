@@ -2,6 +2,7 @@ package com.spaspandev.movieapp.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Lob;
 
 @Entity
 public class Movie extends BaseEntity{
@@ -11,7 +12,8 @@ public class Movie extends BaseEntity{
     private String imdb_id;
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
+    @Lob
     private String description;
     @Column
     private int budget;
