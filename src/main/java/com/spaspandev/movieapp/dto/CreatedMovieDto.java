@@ -1,30 +1,27 @@
-package com.spaspandev.movieapp.model.entity;
+package com.spaspandev.movieapp.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+public class CreatedMovieDto {
 
-@Entity
-public class Movie extends BaseEntity{
-    @Column(unique = true)
+    private Long id;
     private Long movie_external_id;
-    @Column(unique = true)
     private String imdb_id;
-    @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
     private String description;
-    @Column
     private int budget;
-    @Column
     private int revenue;
-    @Column
     private int runtime;
-    @Column
     private double popularity;
-    @Column
     private String status;
 
-    public Movie() {
+    public CreatedMovieDto() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getMovie_external_id() {

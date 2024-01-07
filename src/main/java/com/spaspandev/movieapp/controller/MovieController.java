@@ -1,5 +1,7 @@
 package com.spaspandev.movieapp.controller;
 
+import com.spaspandev.movieapp.dto.AddMovieDto;
+import com.spaspandev.movieapp.dto.CreatedMovieDto;
 import com.spaspandev.movieapp.dto.DayTrendingMoviesDto;
 import com.spaspandev.movieapp.service.MovieService;
 import org.springframework.http.ResponseEntity;
@@ -25,5 +27,11 @@ public class MovieController {
     public ResponseEntity<?> deleteMovie(@PathVariable Long id) {
 
         return movieService.deleteMovie(id);
+    }
+
+    @PostMapping
+    public ResponseEntity<CreatedMovieDto> addMovie(@RequestBody AddMovieDto addMovieDto) {
+
+        return ResponseEntity.ok(movieService.addMovie(addMovieDto));
     }
 }
