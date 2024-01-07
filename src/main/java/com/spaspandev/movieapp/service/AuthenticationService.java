@@ -1,6 +1,7 @@
 package com.spaspandev.movieapp.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spaspandev.movieapp.config.AppUser;
 import com.spaspandev.movieapp.dto.AuthenticationResponseDto;
 import com.spaspandev.movieapp.dto.LoginUserDto;
 import com.spaspandev.movieapp.dto.RegisterUserDto;
@@ -47,9 +48,11 @@ public class AuthenticationService {
 
         User savedUser = userRepository.save(user);
 
-        String jwtToken = jwtService.generateToken(user);
+        AppUser appUser = new AppUser(user);
 
-        String refreshToken = jwtService.generateRefreshToken(user);
+        String jwtToken = jwtService.generateToken(appUser);
+
+        String refreshToken = jwtService.generateRefreshToken(appUser);
 
         saveUserToken(savedUser, jwtToken);
 
@@ -67,9 +70,11 @@ public class AuthenticationService {
 
         User user = userRepository.findByUsername(loginUserDto.getUsername()).orElseThrow();
 
-        String jwtToken = jwtService.generateToken(user);
+        AppUser appUser = new AppUser(user);
 
-        String refreshToken = jwtService.generateRefreshToken(user);
+        String jwtToken = jwtService.generateToken(appUser);
+
+        String refreshToken = jwtService.generateRefreshToken(appUser);
 
         revokeAllUserTokens(user);
 
@@ -128,9 +133,11 @@ public class AuthenticationService {
 
             User user = this.userRepository.findByUsername(username).orElseThrow();
 
-            if (jwtService.isTokenValid(refreshToken, user)) {
+            AppUser appUser = new AppUser(user);
 
-                String accessToken = jwtService.generateToken(user);
+            if (jwtService.isTokenValid(refreshToken, appUser)) {
+
+                String accessToken = jwtService.generateToken(appUser);
 
                 revokeAllUserTokens(user);
                 saveUserToken(user, accessToken);
