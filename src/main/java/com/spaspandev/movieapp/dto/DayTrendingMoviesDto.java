@@ -4,12 +4,12 @@ import java.util.List;
 
 public class DayTrendingMoviesDto {
 
-    private List<MovieDto> results;
+    private List<MovieSmallInfoDto> results;
 
     public DayTrendingMoviesDto() {
     }
 
-    public List<MovieDto> getResults() {
+    public List<MovieSmallInfoDto> getResults() {
         return results;
     }
 }
