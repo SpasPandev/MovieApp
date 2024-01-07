@@ -68,4 +68,22 @@ public class MovieService {
 
         return modelMapper.map(savedMovie, CreatedMovieDto.class);
     }
+
+    public ModifiedMovieDto editMovie(Long id, EditMovieDto editMovieDto) {
+
+        Movie movie = movieRepository.findById(id).orElseThrow(() -> new RuntimeException("User couldn't found by id: " + id));
+
+        movie.setMovie_external_id(editMovieDto.getMovie_external_id());
+        movie.setImdb_id(editMovieDto.getImdb_id());
+        movie.setName(editMovieDto.getName());
+        movie.setDescription(editMovieDto.getDescription());
+        movie.setBudget(editMovieDto.getBudget());
+        movie.setRevenue(editMovieDto.getRevenue());
+        movie.setPopularity(editMovieDto.getPopularity());
+        movie.setStatus(editMovieDto.getStatus());
+
+        movieRepository.save(movie);
+
+        return modelMapper.map(movie, ModifiedMovieDto.class);
+    }
 }

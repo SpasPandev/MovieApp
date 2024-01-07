@@ -1,9 +1,8 @@
 package com.spaspandev.movieapp.controller;
 
-import com.spaspandev.movieapp.dto.AddMovieDto;
-import com.spaspandev.movieapp.dto.CreatedMovieDto;
-import com.spaspandev.movieapp.dto.DayTrendingMoviesDto;
+import com.spaspandev.movieapp.dto.*;
 import com.spaspandev.movieapp.service.MovieService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,5 +32,11 @@ public class MovieController {
     public ResponseEntity<CreatedMovieDto> addMovie(@RequestBody AddMovieDto addMovieDto) {
 
         return ResponseEntity.ok(movieService.addMovie(addMovieDto));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ModifiedMovieDto> editMovie(@PathVariable Long id, @Valid @RequestBody EditMovieDto editMovieDto){
+
+        return ResponseEntity.ok(movieService.editMovie(id, editMovieDto));
     }
 }
