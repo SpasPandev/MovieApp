@@ -1,8 +1,10 @@
 package com.spaspandev.movieapp.service;
 
-import com.spaspandev.movieapp.dto.DayTrendingMoviesDto;
+import com.spaspandev.movieapp.dto.*;
+import com.spaspandev.movieapp.model.entity.Movie;
 import com.spaspandev.movieapp.repository.MovieRepository;
 import com.spaspandev.movieapp.utils.Url;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +16,15 @@ public class MovieService {
 
     private final RestTemplate restTemplate;
     private final MovieRepository movieRepository;
+    private final ModelMapper modelMapper;
 
     @Value("${api_key}")
     private String api;
 
-    public MovieService(RestTemplate restTemplate, MovieRepository movieRepository) {
+    public MovieService(RestTemplate restTemplate, MovieRepository movieRepository, ModelMapper modelMapper) {
         this.restTemplate = restTemplate;
         this.movieRepository = movieRepository;
+        this.modelMapper = modelMapper;
     }
 
     public DayTrendingMoviesDto getDayTrendingMovies() {
@@ -38,5 +42,12 @@ public class MovieService {
 
             return new ResponseEntity<>("Movie with id: " + id + " was not found!", HttpStatus.NOT_FOUND);
         }
+    }
+
+    public CreatedMovieDto addMovie(AddMovieDto addMovieDto) {
+
+        Movie savedMovie = movieRepository.save(modelMapper.map(addMovieDto, Movie.class));
+
+        return modelMapper.map(savedMovie, CreatedMovieDto.class);
     }
 }
