@@ -11,6 +11,7 @@ public class UserDto {
     private String username;
     private String email;
     private Role role;
+    private boolean isDeleted;
 
     public UserDto() {
     }
@@ -37,5 +38,13 @@ public class UserDto {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }
