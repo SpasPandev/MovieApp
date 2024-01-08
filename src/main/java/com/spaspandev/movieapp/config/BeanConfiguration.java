@@ -26,6 +26,14 @@ public class BeanConfiguration {
                 .addMappings(mapper ->
                         mapper.map(MovieFullInfoDto::getOverview, Movie::setDescription))
         ;
+
+        modelMapper
+                .typeMap(Movie.class, MovieFullInfoDto.class)
+                .addMappings(mapper ->
+                        mapper.map(Movie::getName, MovieFullInfoDto::setTitle))
+                .addMappings(mapper ->
+                        mapper.map(Movie::getDescription, MovieFullInfoDto::setOverview));
+
         return modelMapper;
     }
 

@@ -13,4 +13,11 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     @Query("SELECT m FROM Movie AS m " +
             "WHERE m.movie_external_id = ?1")
     Optional<Movie> findByMovieExternalId(Long movie_external_id);
+
+    @Query("SELECT m FROM Movie AS m " +
+            "LEFT JOIN m.likedByUsers AS lu " +
+            "GROUP BY m " +
+            "ORDER BY COUNT(lu) DESC " +
+            "LIMIT 1")
+    Optional<Movie> findMovieWithMostLikes();
 }

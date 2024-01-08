@@ -3,9 +3,12 @@ package com.spaspandev.movieapp.model.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
+
+import java.util.Set;
 
 @Entity
-public class Movie extends BaseEntity{
+public class Movie extends BaseEntity {
     @Column(unique = true)
     private Long movie_external_id;
     @Column(unique = true)
@@ -25,6 +28,8 @@ public class Movie extends BaseEntity{
     private double popularity;
     @Column
     private String status;
+    @ManyToMany(mappedBy = "likedMovies")
+    private Set<User> likedByUsers;
 
     public Movie() {
     }
@@ -99,5 +104,13 @@ public class Movie extends BaseEntity{
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Set<User> getLikedByUsers() {
+        return likedByUsers;
+    }
+
+    public void setLikedByUsers(Set<User> likedByUsers) {
+        this.likedByUsers = likedByUsers;
     }
 }

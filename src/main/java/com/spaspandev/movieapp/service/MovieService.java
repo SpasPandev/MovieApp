@@ -124,4 +124,9 @@ public class MovieService {
 
         return movieRepository.findById(movieId);
     }
+
+    public ResponseEntity<?> findMovieWithMostLikes() {
+
+        return ResponseEntity.ok(modelMapper.map(movieRepository.findMovieWithMostLikes().get(), MovieFullInfoDto.class));
+    }
 }

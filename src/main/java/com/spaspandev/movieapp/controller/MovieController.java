@@ -45,4 +45,10 @@ public class MovieController {
 
         return ResponseEntity.ok(movieService.findMovieByName(movieName));
     }
+
+    @GetMapping("/findMovieWithMostLikes")
+    public ResponseEntity<?> findMovieWithMostLikes(){
+
+        return movieService.findMovieWithMostLikes();
+    }
 }
