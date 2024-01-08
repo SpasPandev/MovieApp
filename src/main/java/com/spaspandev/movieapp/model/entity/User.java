@@ -21,6 +21,8 @@ public class User extends BaseEntity {
     @ManyToMany
     @JoinTable(name = "likedMovies", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private Set<Movie> likedMovies;
+    @Column(columnDefinition = "boolean default false", nullable = false)
+    private boolean isDeleted;
 
     public User() {
     }
@@ -71,5 +73,13 @@ public class User extends BaseEntity {
 
     public void setLikedMovies(Set<Movie> likedMovies) {
         this.likedMovies = likedMovies;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

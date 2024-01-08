@@ -13,6 +13,8 @@ import com.spaspandev.movieapp.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -63,12 +65,16 @@ public class AuthenticationService {
         return authenticationResponseDto;
     }
 
-    public AuthenticationResponseDto login(LoginUserDto loginUserDto) {
+    public ResponseEntity<?> login(LoginUserDto loginUserDto) {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginUserDto.getUsername(), loginUserDto.getPassword()));
 
         User user = userRepository.findByUsername(loginUserDto.getUsername()).orElseThrow();
+
+        if(user.isDeleted()){
+            return ResponseEntity.notFound().build();
+        }
 
         AppUser appUser = new AppUser(user);
 
@@ -84,7 +90,7 @@ public class AuthenticationService {
         authenticationResponseDto.setAccessToken(jwtToken);
         authenticationResponseDto.setRefreshToken(refreshToken);
 
-        return authenticationResponseDto;
+        return ResponseEntity.ok(authenticationResponseDto);
     }
 
     private void revokeAllUserTokens(User user) {
