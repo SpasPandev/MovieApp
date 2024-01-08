@@ -61,4 +61,19 @@ public class UserService {
 
         return ResponseEntity.ok().build();
     }
+
+    public ResponseEntity<?> restoreUser(Long id) {
+
+        Optional<User> userOpt = userRepository.findById(id);
+
+        if(userOpt.isEmpty()){
+
+            return ResponseEntity.notFound().build();
+        }
+
+        userOpt.get().setDeleted(false);
+        userRepository.save(userOpt.get());
+
+        return ResponseEntity.ok().build();
+    }
 }

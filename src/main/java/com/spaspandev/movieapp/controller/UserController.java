@@ -34,4 +34,10 @@ public class UserController {
 
         return userService.deleteUser(id);
     }
+
+    @PatchMapping("/admin/restoreUser/{id}")
+    public ResponseEntity<?> restoreUser(@PathVariable Long id){
+
+        return userService.restoreUser(id);
+    }
 }
