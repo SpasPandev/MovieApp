@@ -50,4 +50,10 @@ public class UserController {
 
         return userService.editProfile(editProfileDto, appUser);
     }
+
+    @PatchMapping("/addMovieToWatchlist/{movieId}")
+    public ResponseEntity<?> addMovieToWatchlist(@PathVariable Long movieId, @AuthenticationPrincipal AppUser appUser) {
+
+        return userService.addMovieToWatchlist(movieId, appUser);
+    }
 }
