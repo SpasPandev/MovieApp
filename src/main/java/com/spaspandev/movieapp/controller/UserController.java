@@ -56,4 +56,10 @@ public class UserController {
 
         return userService.addMovieToWatchlist(movieId, appUser);
     }
+
+    @PatchMapping("/likeMovie/{movieId}")
+    public ResponseEntity<?> likeMovie(@PathVariable Long movieId, @AuthenticationPrincipal AppUser appUser) {
+
+        return userService.likeMovie(movieId, appUser);
+    }
 }

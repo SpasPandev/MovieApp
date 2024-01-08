@@ -132,4 +132,32 @@ public class UserService {
 
         return watchlist.stream().anyMatch(movie -> movie.getId().equals(movieId));
     }
+
+    public ResponseEntity<?> likeMovie(Long movieId, AppUser appUser) {
+
+        Optional<Movie> movieOpt = movieService.findMovieById(movieId);
+
+        if (movieOpt.isEmpty()) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Movie with id: " + movieId + " was not found!");
+        }
+
+        User currentUser = userRepository.findByUsername(appUser.getUsername()).get();
+
+        if (checkMovieIsAlreadyLiked(movieId, currentUser.getLikedMovies())) {
+
+            return ResponseEntity.badRequest().body("Movie with id: " + movieId + " is already liked!");
+        }
+
+        currentUser.getLikedMovies().add(movieOpt.get());
+
+        userRepository.save(currentUser);
+
+        return ResponseEntity.ok("Movie was liked!");
+    }
+
+    private boolean checkMovieIsAlreadyLiked(Long movieId, Set<Movie> likedMovies) {
+
+        return likedMovies.stream().anyMatch(movie -> movie.getId().equals(movieId));
+    }
 }
