@@ -39,7 +39,7 @@ public class MovieService {
 
     private void checkIfMovieExistInDbAndSaveIt(MovieSmallInfoDto movieSmallInfoDto) {
 
-        if(movieRepository.findByMovieExternalId(movieSmallInfoDto.getId()).isEmpty()){
+        if (movieRepository.findByMovieExternalId(movieSmallInfoDto.getId()).isEmpty()) {
 
             MovieFullInfoDto movieFullInfoDto = restTemplate.getForObject(Url.MOVIE_URL + movieSmallInfoDto.getId() +
                     "?api_key=" + api, MovieFullInfoDto.class);
@@ -86,4 +86,36 @@ public class MovieService {
 
         return modelMapper.map(movie, ModifiedMovieDto.class);
     }
+
+    public ListOfFindedMoviesDto findMovieByName(String movieName) {
+
+        ListOfFindedMoviesDto listOfFindedMoviesDto = restTemplate.getForObject(Url.FIND_MOVIE_BY_NAME_URL + encodeMovieName(movieName) +
+                "&api_key=" + api, ListOfFindedMoviesDto.class);
+
+        listOfFindedMoviesDto.getResults().forEach(this::checkIfMovieExistInDbAndSaveIt);
+
+        return listOfFindedMoviesDto;
+    }
+
+    private String encodeMovieName(String movieName) {
+
+        String[] parts = movieName.split(" ");
+
+        if (parts.length == 1) {
+            return movieName.toLowerCase();
+        }
+
+        StringBuilder encodedMovieName = new StringBuilder();
+
+        for (int i = 0; i < parts.length; i++) {
+            encodedMovieName.append(parts[i]);
+            if (i < parts.length - 1) {
+                encodedMovieName.append("+");
+            }
+        }
+
+        return encodedMovieName.toString().toLowerCase();
+    }
+
+
 }

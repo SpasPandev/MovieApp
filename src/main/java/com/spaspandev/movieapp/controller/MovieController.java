@@ -39,4 +39,10 @@ public class MovieController {
 
         return ResponseEntity.ok(movieService.editMovie(id, editMovieDto));
     }
+
+    @GetMapping("/{movieName}")
+    public ResponseEntity<ListOfFindedMoviesDto> findMovieByName(@PathVariable String movieName){
+
+        return ResponseEntity.ok(movieService.findMovieByName(movieName));
+    }
 }
