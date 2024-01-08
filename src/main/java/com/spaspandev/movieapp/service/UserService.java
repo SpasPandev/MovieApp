@@ -5,10 +5,12 @@ import com.spaspandev.movieapp.enumeration.Role;
 import com.spaspandev.movieapp.model.entity.User;
 import com.spaspandev.movieapp.repository.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,5 +45,20 @@ public class UserService {
         }
 
         return modelMapper.map(user, UserDto.class);
+    }
+
+    public ResponseEntity<?> deleteUser(Long id) {
+
+        Optional<User> userOpt = userRepository.findById(id);
+
+        if(userOpt.isEmpty() || userOpt.get().isDeleted()){
+
+            return ResponseEntity.notFound().build();
+        }
+
+        userOpt.get().setDeleted(true);
+        userRepository.save(userOpt.get());
+
+        return ResponseEntity.ok().build();
     }
 }

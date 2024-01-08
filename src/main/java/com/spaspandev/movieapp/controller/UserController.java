@@ -28,4 +28,10 @@ public class UserController {
 
         return ResponseEntity.ok(userService.changeUserRole(id));
     }
+
+    @PatchMapping("/admin/deleteUser/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id){
+
+        return userService.deleteUser(id);
+    }
 }
