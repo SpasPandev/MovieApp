@@ -3,9 +3,7 @@ package com.spaspandev.movieapp.controller;
 import com.spaspandev.movieapp.dto.UserDto;
 import com.spaspandev.movieapp.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +21,11 @@ public class UserController {
     public ResponseEntity<List<UserDto>> getAllUsers(){
 
         return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+    @PatchMapping("/admin/changeUserRole/{id}")
+    public ResponseEntity<UserDto> changeUserRole(@PathVariable Long id){
+
+        return ResponseEntity.ok(userService.changeUserRole(id));
     }
 }

@@ -1,8 +1,11 @@
 package com.spaspandev.movieapp.service;
 
 import com.spaspandev.movieapp.dto.UserDto;
+import com.spaspandev.movieapp.enumeration.Role;
+import com.spaspandev.movieapp.model.entity.User;
 import com.spaspandev.movieapp.repository.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,5 +28,20 @@ public class UserService {
                 .stream()
                 .map(u -> modelMapper.map(u, UserDto.class))
                 .collect(Collectors.toList());
+    }
+
+    public UserDto changeUserRole(Long id) {
+
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User with id: " + id + "was not found!"));
+
+        if (user.getRole().name().equals("USER")) {
+            user.setRole(Role.ADMIN);
+            userRepository.save(user);
+        } else {
+            user.setRole(Role.USER);
+            userRepository.save(user);
+        }
+
+        return modelMapper.map(user, UserDto.class);
     }
 }
