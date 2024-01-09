@@ -1,5 +1,6 @@
 package com.spaspandev.movieapp.config;
 
+import com.spaspandev.movieapp.enumeration.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -35,6 +36,7 @@ public class SecurityConfiguration {
                         (authorizeHttpRequests) -> authorizeHttpRequests
                                 .requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/movie/**").authenticated()
+                                .requestMatchers("/user/admin/**").hasRole(Role.ADMIN.name())
                                 .anyRequest().authenticated())
                 .sessionManagement(
                         (sessionManagement) -> sessionManagement
