@@ -73,7 +73,7 @@ public class MovieService {
 
     public ModifiedMovieDto editMovie(Long id, EditMovieDto editMovieDto) {
 
-        Movie movie = movieRepository.findById(id).orElseThrow(() -> new RuntimeException("User couldn't found by id: " + id));
+        Movie movie = movieRepository.findById(id).orElseThrow(() -> new RuntimeException("Movie with id: " + id + " can't be found!"));
 
         movie.setMovie_external_id(editMovieDto.getMovie_external_id());
         movie.setImdb_id(editMovieDto.getImdb_id());
