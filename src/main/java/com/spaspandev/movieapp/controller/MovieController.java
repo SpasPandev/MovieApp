@@ -35,19 +35,19 @@ public class MovieController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ModifiedMovieDto> editMovie(@PathVariable Long id, @Valid @RequestBody EditMovieDto editMovieDto){
+    public ResponseEntity<?> editMovie(@PathVariable Long id, @Valid @RequestBody EditMovieDto editMovieDto) {
 
-        return ResponseEntity.ok(movieService.editMovie(id, editMovieDto));
+        return movieService.editMovie(id, editMovieDto);
     }
 
     @GetMapping("/{movieName}")
-    public ResponseEntity<ListOfFindedMoviesDto> findMovieByName(@PathVariable String movieName){
+    public ResponseEntity<ListOfFindedMoviesDto> findMovieByName(@PathVariable String movieName) {
 
         return ResponseEntity.ok(movieService.findMovieByName(movieName));
     }
 
     @GetMapping("/findMovieWithMostLikes")
-    public ResponseEntity<?> findMovieWithMostLikes(){
+    public ResponseEntity<?> findMovieWithMostLikes() {
 
         return movieService.findMovieWithMostLikes();
     }

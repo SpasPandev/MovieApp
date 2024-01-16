@@ -71,9 +71,25 @@ public class MovieService {
         return modelMapper.map(savedMovie, CreatedMovieDto.class);
     }
 
-    public ModifiedMovieDto editMovie(Long id, EditMovieDto editMovieDto) {
+    public ResponseEntity<?> editMovie(Long id, EditMovieDto editMovieDto) {
 
         Movie movie = movieRepository.findById(id).orElseThrow(() -> new RuntimeException("Movie with id: " + id + " can't be found!"));
+
+        if (movieRepository.findByMovieImdbId(editMovieDto.getImdb_id()).isPresent() &&
+                !editMovieDto.getImdb_id().equals(movie.getImdb_id())) {
+
+            return ResponseEntity.badRequest()
+                    .body("There is a movie with this imdb_id: "
+                            + editMovieDto.getImdb_id());
+        }
+
+        if (movieRepository.findByMovieExternalId(editMovieDto.getMovie_external_id()).isPresent() &&
+                !editMovieDto.getMovie_external_id().equals(movie.getMovie_external_id())) {
+
+            return ResponseEntity.badRequest()
+                    .body("There is a movie with this external_id: "
+                            + editMovieDto.getMovie_external_id());
+        }
 
         movie.setMovie_external_id(editMovieDto.getMovie_external_id());
         movie.setImdb_id(editMovieDto.getImdb_id());
@@ -86,7 +102,7 @@ public class MovieService {
 
         movieRepository.save(movie);
 
-        return modelMapper.map(movie, ModifiedMovieDto.class);
+        return ResponseEntity.ok(modelMapper.map(movie, ModifiedMovieDto.class));
     }
 
     public ListOfFindedMoviesDto findMovieByName(String movieName) {

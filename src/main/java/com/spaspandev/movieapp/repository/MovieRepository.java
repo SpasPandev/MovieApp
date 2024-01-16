@@ -20,4 +20,8 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
             "ORDER BY COUNT(lu) DESC " +
             "LIMIT 1")
     Optional<Movie> findMovieWithMostLikes();
+
+    @Query("SELECT m FROM Movie AS m " +
+            "WHERE m.imdb_id = ?1")
+    Optional<Movie> findByMovieImdbId(String imdb_id);
 }
