@@ -1,15 +1,30 @@
 package com.spaspandev.movieapp.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+
 public class AddMovieDto {
 
     private Long movie_external_id;
     private String imdb_id;
+    @NotNull
     private String name;
+    @NotNull
     private String description;
+    @NotNull
+    @PositiveOrZero
     private int budget;
+    @NotNull
+    @PositiveOrZero
     private int revenue;
+    @NotNull
+    @PositiveOrZero
     private int runtime;
+    @NotNull
+    @PositiveOrZero
     private double popularity;
+    @NotNull
     private String status;
 
     public AddMovieDto() {

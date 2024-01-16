@@ -28,8 +28,9 @@ public class MovieController {
         return movieService.deleteMovie(id);
     }
 
-    @PostMapping
-    public ResponseEntity<CreatedMovieDto> addMovie(@RequestBody AddMovieDto addMovieDto) {
+    @
+    @PostMapping("/addMovie")
+    public ResponseEntity<CreatedMovieDto> addMovie(@Valid @RequestBody AddMovieDto addMovieDto) {
 
         return ResponseEntity.ok(movieService.addMovie(addMovieDto));
     }

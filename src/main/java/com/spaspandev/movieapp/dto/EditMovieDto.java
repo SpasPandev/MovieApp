@@ -1,6 +1,7 @@
 package com.spaspandev.movieapp.dto;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 public class EditMovieDto {
 
@@ -13,12 +14,16 @@ public class EditMovieDto {
     @NotNull
     private String description;
     @NotNull
+    @PositiveOrZero
     private int budget;
     @NotNull
+    @PositiveOrZero
     private int revenue;
     @NotNull
+    @PositiveOrZero
     private int runtime;
     @NotNull
+    @PositiveOrZero
     private double popularity;
     @NotNull
     private String status;
